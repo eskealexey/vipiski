@@ -1,6 +1,3 @@
-import os
-
-import my_lib.liba
 import my_lib.liba as lib
 from datetime import date
 
@@ -17,7 +14,7 @@ path_arx = today.replace('-', '/')
 lib.creating_archive(file_list_full, path_dist + path_arx)
 
 # удаление файлов
-# my_lib.liba.files_delete(file_list_full)
+# lib.files_delete(file_list_full)
 
 
 

@@ -1,6 +1,5 @@
 import os
 import zipfile
-import zipfile as zip
 
 
 # Функция получения списка файлов в каталоге и подкаталогах
