@@ -1,3 +1,6 @@
+import os
+
+import my_lib.liba
 import my_lib.liba as lib
 from datetime import date
 
@@ -12,6 +15,10 @@ file_list_full = lib.get_list_files(path_root)
 today = str(date.today())
 path_arx = today.replace('-', '/')
 lib.creating_archive(file_list_full, path_dist + path_arx)
+
+# удаление файлов
+# my_lib.liba.files_delete(file_list_full)
+
 
 
 list_xml = lib.get_list_file_ext(file_list_full, '.xml')

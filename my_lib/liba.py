@@ -23,6 +23,7 @@ def get_list_file_ext(lst_, ext_):
     return list_ext
 
 
+# создание архива
 def creating_archive(full, dist):
     dir_ = dist[:-2]
     name = dist[-2:]
@@ -39,7 +40,10 @@ def creating_archive(full, dist):
                 archive.write(f)
 
 
-    print(dist, dir_, name)
+# Удаление файлов
+def files_delete(full):
+    for f in full:
+        os.remove(f)
 
 
 
