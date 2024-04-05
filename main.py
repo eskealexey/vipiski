@@ -1,16 +1,24 @@
-# This is a sample Python script.
+import my_lib.liba as lib
+from datetime import date
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+path_root = '/home/alexey/dir_root/vipiski'         # корневой каталог
+path_dist = '/home/alexey/dir_destination/'         # каталог назначения
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+#
+file_list_full = lib.get_list_files(path_root)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# создаем архив всех файлов
+today = str(date.today())
+path_arx = today.replace('-', '/')
+lib.creating_archive(file_list_full, path_dist + path_arx)
+
+
+list_xml = lib.get_list_file_ext(file_list_full, '.xml')
+list_html = lib.get_list_file_ext(file_list_full, '.htm')
+
+
+
+
+# for file in file_list_full:
+#     print(file)
