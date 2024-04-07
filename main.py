@@ -3,13 +3,9 @@ from datetime import date
 import configparser
 
 
-
-
-
-#получаем аргументы из конфигурационного файла
+# получаем аргументы из конфигурационного файла
 config = configparser.ConfigParser()
 config.read('user.conf')
-# print(config.sections())
 path_root = config.get('DIR', 'r_vipiski')          # корневой каталог
 path_dist = config.get('DIR', 'a_vipiski')          # каталог с архивами
 password = config.get('FTP', 'pass')                # пароль к ФТП
@@ -19,12 +15,7 @@ ftp_vipiski = config.get('FTP_DIR', 'fDirVip')      # каталог с выпи
 ftp_arxiv = config.get('FTP_DIR', 'fDirVypiski')    # каталог с файлами для архива (htm)
 
 
-
-# print(path_root, path_dist )
-# print(password, ip, user_ftp)
-# print(ftp_vipiski, ftp_arxiv)
-
-
+# Список всех файлов в каталоге и подкаталогах
 file_list_full = lib.get_list_files(path_root)
 
 # создаем архив всех файлов
@@ -32,35 +23,44 @@ today = str(date.today())
 path_arx = today.replace('-', '/')
 # lib.creating_archive(file_list_full, path_dist + path_arx)
 
-# получаес список всех .xml файлов
-# list_xml = lib.get_list_file_ext(file_list_full, '.xml')
-# отправка на фтп
-# lib.ftp_upload(user_ftp, password, ip, ftp_vipiski)
+
+# получаес список всех .xml файлов иоправляем на ФТП сервер
+list_xml = lib.get_list_file_ext(file_list_full, '.xml')
+for file_ in list_xml:
+    subdir = file_[-61:-59]
+    if subdir == '01':
+        subdir = '1'
+    elif subdir == '02':
+        subdir = '2'
+    elif subdir == '03':
+        subdir = '3'
+    elif subdir == '04':
+        subdir = '4'
+    elif subdir == '05':
+        subdir = '5'
+    elif subdir == '06':
+        subdir = '6'
+    elif subdir == '07':
+        subdir = '7'
+    elif subdir == '08':
+        subdir = '8'
+    elif subdir == '09':
+        subdir = '9'
+    # print(subdir)
+    name_file = file_[-80:]
+    xml_path = ftp_vipiski + subdir + '/'
+    lib.ftp_upload(user_ftp, password, ip, file_, xml_path, name_file)
 
 
-# получаес список всех .html файлов
+# получаем список всех .html файлов и отправляем на ФТП сервер
 list_html = lib.get_list_file_ext(file_list_full, '.htm')
 for file_ in list_html:
-    #OUT-600-INDPT-044-019-INNMB-2024-0-000176-OUTDPT-044-000-OUTNMB-2024-0004950.XML
-
     subdir = file_[-61:-59]
     name_file = file_[-80:]
     html_path = ftp_arxiv + subdir + '/'
-    # print(subdir)
-    # print(file_)
-    # print(name_file)
-    # print(html_path)
-
     lib.ftp_upload(user_ftp, password, ip, file_, html_path, name_file)
 
 
 # удаление файлов
-# lib.files_delete(file_list_full)
+lib.files_delete(file_list_full)
 
-
-
-
-
-
-# for file in file_list_full:
-#     print(file)
