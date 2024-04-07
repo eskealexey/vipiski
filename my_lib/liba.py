@@ -1,6 +1,6 @@
 import os
 import zipfile
-
+from ftplib import FTP_TLS
 
 # Функция получения списка файлов в каталоге и подкаталогах
 def get_list_files(root_):
@@ -44,6 +44,17 @@ def files_delete(full):
     for f in full:
         os.remove(f)
 
+
+# отправка файлов на ФТП
+def ftp_upload(login, pwd, host, uot_name, html_path, name_file):
+    ftps = FTP_TLS(host)
+    ftps.login(login, pwd)
+    ftps.prot_p()
+    ftps.pwd()
+    ftps.cwd(html_path)
+    ftps.nlst()
+    with open(uot_name, "rb") as file:
+        ftps.storbinary('STOR ' + name_file, file)
 
 
 
