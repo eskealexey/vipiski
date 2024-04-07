@@ -21,10 +21,10 @@ file_list_full = lib.get_list_files(path_root)
 # создаем архив всех файлов
 today = str(date.today())
 path_arx = today.replace('-', '/')
-# lib.creating_archive(file_list_full, path_dist + path_arx)
+lib.creating_archive(file_list_full, path_dist + path_arx)
 
 
-# получаес список всех .xml файлов иоправляем на ФТП сервер
+# получаем список всех .xml файлов и отправляем на ФТП сервер
 list_xml = lib.get_list_file_ext(file_list_full, '.xml')
 for file_ in list_xml:
     subdir = file_[-61:-59]
@@ -61,6 +61,6 @@ for file_ in list_html:
     lib.ftp_upload(user_ftp, password, ip, file_, html_path, name_file)
 
 
-# удаление файлов
+# удаление файлов в исходной папке
 lib.files_delete(file_list_full)
 
